@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
  * 
  * Documentation: https://www.npmjs.com/package/jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
  */
-function createToken() {
-    
+function createToken(payload, secretOrPrivateKey) {
+   return jwt.sign(payload, secretOrPrivateKey)
 }
 
 /**
@@ -14,8 +14,8 @@ function createToken() {
  * 
  * Documentation: https://www.npmjs.com/package/jsonwebtoken#token-expiration-exp-claim
  */
-function createTokenWithExpiry() {
-    
+function createTokenWithExpiry(payload, secretOrPrivateKey, time) {
+    return jwt.sign(payload, secretOrPrivateKey, { expiresIn: time })
 }
 
 /**
@@ -23,7 +23,12 @@ function createTokenWithExpiry() {
  * 
  * Documentation: https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
  */
-function verifyToken() {
+function verifyToken(expectedToken, secretOrPrivateKey) {
+    try {
+        return jwt.verify(expectedToken, secretOrPrivateKey)
+      } catch(err) {
+        if(err) return false
+      }
 
 }
 
